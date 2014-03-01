@@ -463,7 +463,7 @@ set backupdir=/tmp
 
 " 不可視文字を可視化
 set list
-set lcs=tab:>-,trail:_,extends:>,precedes::<,nbsp:x
+set lcs=tab:>-,trail:_,extends:>,precedes:<,nbsp:x
 
 
 " 保存時に行末のスペースを削除
