@@ -52,7 +52,7 @@ NeoBundle 'Shougo/vimfiler.vim', {
 NeoBundle 'tpope/vim-pathogen'
 
 " 非同期にコンパイラを動かしてquickfixに表示
-NeoBundle 'tpope/dispatch.vim'
+NeoBundle 'tpope/vim-dispatch'
 
 " 汎用的にシンタックスチェック
 NeoBundle 'scrooloose/syntastic', {
