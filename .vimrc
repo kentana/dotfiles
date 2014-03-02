@@ -339,7 +339,7 @@ set number
 set hidden
 
 " ビープ音じゃなくてビジュアルベルを使う
-set vi t_vb=
+set vb t_vb=
 
 " vimの外でファイルが変更された時に自動で読み込む
 set autoread
