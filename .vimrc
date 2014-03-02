@@ -332,6 +332,9 @@ execute pathogen#infect()
 " 行番号を表示する
 set number
 
+" viminfoに情報を入れとく
+" set viminfo=string
+
 " 保存されてないファイルがあっても別のファイル開ける
 set hidden
 
@@ -1337,3 +1340,119 @@ let g:user_emmet_settings = {
       \     'filters' : 'html',
       \   },
       \ }
+
+
+" ==================================================
+" tcomment_vim
+" ==================================================
+
+" コメントをノーマルモードでは<C-c>でトグルする
+nnoremap <C-c> :<C-u>TComment<CR>
+
+" ヴィジュアルモードでは<C-t>でトグルする
+" 書き方がわからんｗｗｗ
+" vnoremap <C-t> gc
+
+" デフォルトにないfiletypeのコメントを追加
+if !exists('g:tcomment_types')
+  let g:tcomment_types = {}
+endif
+
+let g:tcomment_types['rspec'] = '# %s'
+let g:tcomment_types['scss'] = '// %s'
+let g:tcomment_types['coffee'] = '# %s'
+let g:tcomment_types['slim'] = '/! %s'
+
+" ==================================================
+" はてなブログ
+" ==================================================
+
+" <space>hではてなの機能を使う
+autocmd Filetype text nnoremap [hatena] nop
+autocmd Filetype text nmap <Space>h [hatena]
+autocmd Filetype text nnoremap [hatena]cr :HatebloCreate<CR>
+autocmd Filetype text nnoremap [hatena]cd :HatebloCreateDraft<CR>
+autocmd Filetype text nnoremap [hatena]l :HatebloList<CR>
+autocmd Filetype text nnoremap [hatena]u :HatebloUpdate<CR>
+autocmd Filetype text nnoremap [hatena]d :HatebloDelete<CR>
+
+" はてな記法入力支援
+autocmd Filetype text inoreabbrev bq >><CR><<<ESC>
+autocmd Filetype text inoreabbrev pre >\|<CR>\|<<ESC>
+autocmd Filetype text inoreabbrev synpre >\|\|<CR>\|\|<<ESC><Up><Left>
+
+
+" ==================================================
+" Scss
+" ==================================================
+
+" scssと同じファイル名でcssにコンパイル
+function s:compile_scss()
+  !sass % %:r.css
+endfunction
+
+" scss保存時にcssにコンパイル
+" <SID>はスクリプトスコープの関数を呼ぶのに必要
+autocmd BufWritePost *.scss call <SID>compile_scss()
+
+
+" ==================================================
+" lightline
+" ==================================================
+
+let g:lightline = {
+      \ 'colorscheme': 'default',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'readonly': 'DisplayReadOnly',
+      \   'modified': 'DisplayModified',
+      \   'fugitive': 'DisplayBranchName',
+      \   'filename': 'DisplayFileName'
+      \ },
+      \ 'separator': { 'left': '>', 'right': '<' },
+      \ 'subseparator': { 'left': '>', 'right': '<'}
+      \ }
+
+" readonlyの表示
+function! DisplayReadOnly()
+  if &filetype == "help"
+    return ""
+  elseif &readonly
+    return "RO"
+  else
+    return ""
+  endif
+endfunction
+
+" modifiedの表示
+function! DisplayModified()
+  if &filetype == "help"
+    return ""
+  elseif &modified
+    return "+"
+  elseif &modifiable
+    return ""
+  else
+    return ""
+  endif
+endfunction
+
+" gitのbranch名の表示
+function! DisplayBranchName()
+  if exists("*fugitive#head")
+    let _ = fugitive#head()
+    return strlen(_) ? '*'._ : ''
+  endif
+
+  return ''
+endfunction
+
+" ファイル名の表示
+function! DisplayFileName()
+  return  ('' != DisplayReadOnly() ? DisplayReadOnly() . ' ' : '') .
+        \ ('' != expand('%:t') ? expand('%:t') : '[No Name]') .
+        \ ('' != DisplayModified() ? ' ' . DisplayModified() : '')
+endfunction
