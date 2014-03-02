@@ -470,7 +470,7 @@ set lcs=tab:>-,trail:_,extends:>,precedes:<,nbsp:x
 
 
 " 保存時に行末のスペースを削除
-autocmd BufWritePre * :%s\s*$//g
+autocmd BufWritePre * :%s/\s*$//g
 
 " 自動で入力されるコメントを削除
 autocmd Filetype * set formatoptions-=ro
