@@ -60,7 +60,7 @@ NeoBundle 'scrooloose/syntastic', {
       \ }
 
 " ファイル移動
-NeoBundle 'nerdtree'
+NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'jistr/vim-nerdtree-tabs'
 
 " vimからgitを使う
