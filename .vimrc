@@ -1456,3 +1456,15 @@ function! DisplayFileName()
         \ ('' != expand('%:t') ? expand('%:t') : '[No Name]') .
         \ ('' != DisplayModified() ? ' ' . DisplayModified() : '')
 endfunction
+
+" ==================================================
+" vim-ref
+" ==================================================
+
+" rubyのhelpを日本語にする
+let g:ref_use_vimproc=1
+let g:ref_refe_version=2
+let g:ref_refe_encoding='utf-8'
+
+" コマンドをマッピング
+autocmd FileType ruby cnoreabbrev ri Ref refe
